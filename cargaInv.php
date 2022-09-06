@@ -31,8 +31,8 @@
         </div>
         <nav>
             <ul class="nav-links">
-                <li id="producto1"><a href="#">Inventario Altum</a></li>
-                <li id="producto2"><a href="#">Secretaria de Cultura y Turismo</a></li>
+                <li id="producto1"><a href="#">Inventario Altum </a></li>
+                <li id="producto2"><a href="#">Secretaria de Cultura y Turismo </a></li>
                 <li><a href="#"></a></li>
             </ul>
         </nav>
