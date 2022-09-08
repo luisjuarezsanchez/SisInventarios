@@ -1,3 +1,6 @@
+<?php
+$conexion = mysqli_connect('localhost', 'root', '', 'cmbd');
+?>
 <!DOCTYPE html>
 <html>
 
@@ -7,7 +10,7 @@
     <!--Icono de la pagina web-->
     <link rel="icon" href="img/iconos/escudo_armas.png">
     <!--Titulo de la página-->
-    <title>Menú principal</title>
+    <title>Histórico de diferencias</title>
 
     <link rel="icon" href="img/menu/icono.png">
     <link rel="stylesheet" type="text/css" href="css/estilos_menu.css">
@@ -18,7 +21,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/tablas.css">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/estilos_reportes.css">
     <link rel="stylesheet" type="text/css" href="css/fuente.css">
 </head>
 
@@ -38,62 +43,60 @@
         <a href="https://cultura.edomex.gob.mx/" target="_blank" class="btn"><button>Contacto</button></a>
     </header>
     <br>
+    <form class="form-login" action="historico.php" method="post" enctype="multipart/form-data">
+        <div style="text-align:center;">
+            <img id="archivo" src="img/iconos/tabla_his.png" height="200" width="200">
+            <h3></h3>
+            <label><select id="lista" name="fechahora">
+                    <?php
+                    include 'conexion.php';
+                    $consulta = "SELECT DISTINCT fechahora FROM hisdifinv ORDER BY fechahora";
+                    $resultado = $mysqli->query($consulta);
+                    ?>
+                    <form action="historico.php" method="post" class="form-login">
+                        <?php foreach ($resultado as  $opciones) : ?>
+                            <option value="<?php echo $opciones['fechahora'] ?>">
+                                <?php echo $opciones['fechahora'] ?>
+                            </option>
+                        <?php endforeach ?>
+                </select></label>
 
-    <table class="imagenes">
-        <tr>
-    </table>
-    </tr>
-    <table class="imagenes">
-        <td>
-        <td>
-            <div class="card">
-                <div class="card text-bg-light mb-3">
-                    <div class="card-body">
-                        <a href="cargaInv.php"><img src="img/iconos/bd.png" width="260" height="190"></a>
-                        <h5 class="card-title">Cargar inventarios</h5>
-                        <p class="card-text">Cargar archivos .xslx a la Base de Datos</p>
-                        <br>
-                        <a href="cargaInv.php" class="btn btn-primary">Ir</a>
-                    </div>
-                </div>
-            </div>
-        </td>
-        </td>
-        <br>
-        <br>
-        <td>
-        <td>
-
-            <div class="card">
-                <div class="card text-bg-light mb-3">
-                    <div class="card-body">
-                        <a href="reporteDiff.php"><img src="img/iconos/reporte.png" width="260" height="190"></a>
-                        <h5 class="card-title">Imprimir reporte de diferencias</h5>
-                        <p class="card-text">Generar el PDF con las diferencias
-                            <br> encontradas en los inventarios
-                        </p>
-                        <a href="reporteDiff.php" class="btn btn-primary">Ir</a>
-                    </div>
-                </div>
-            </div>
-        </td>
-        <td>
-
-<div class="card">
-    <div class="card text-bg-light mb-3">
-        <div class="card-body">
-            <a href="historico.php"><img src="img/iconos/historico.png" width="260" height="190"></a>
-            <h5 class="card-title">Histórico de diferencias encontradas</h5>
-            <p class="card-text">Visualizar el historial de diferencias
-                <br>efectuados en distintos puntos en el tiempo
-            </p>
-            <a href="historico.php" class="btn btn-primary">Ir</a>
+            <button class="buttons">Desplegar diferencias de este punto en el tiempo</button>
+            <br>
         </div>
-    </div>
-</div>
-</td>
-        </td>
+    </form>
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <th>Consecutivo</th>
+                <th>Service Tag</th>
+                <th>Usuario</th>
+                <th>Falla</th>
+                <th>Fecha y Hora</th>
+            </tr>
+        </thead>
+        <?php
+        error_reporting(0);
+        $fechahora = $_POST['fechahora'];
+        $sql = "SELECT * FROM hisdifinv WHERE fechahora = '$fechahora'";
+        $result = mysqli_query($conexion, $sql);
+
+        while ($mostrar = mysqli_fetch_array($result)) {
+        ?>
+            <tr>
+                <td><?php echo $mostrar['consecutivo'] ?></td>
+                <td><?php echo $mostrar['servicetag'] ?></td>
+                <td><?php echo $mostrar['usuario'] ?></td>
+                <td><?php echo $mostrar['falla'] ?></td>
+                <td><?php echo $mostrar['fechahora'] ?></td>
+            </tr>
+        <?php
+        }
+        ?>
     </table>
+
+
     </div>
 </body>
 <br>
