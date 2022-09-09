@@ -45,7 +45,7 @@ class PDF extends FPDF
 //Solicitando la conexion con la BD
 require 'conexion.php';
 //Efectuando la consulta de las vista
-$consulta = "SELECT * FROM diffinv ORDER BY falla";
+$consulta = "SELECT * FROM diferencias ORDER BY falla";
 //Almaceando el resultado de la consulta en una variable
 $resultado = $mysqli->query($consulta);
 
@@ -53,28 +53,44 @@ $resultado = $mysqli->query($consulta);
 $pdf = new PDF('L','mm','A4');//Indicando formato horizontal del reporte
 $pdf->AliasNbPages();
 $pdf->AddPage();
-$pdf->SetFont('Helvetica', '', 9);
+$pdf->SetFont('Helvetica', '', 8);
 
 //Encabezados de la tabla
-$pdf->SetFont('Helvetica', 'B', 9);//Colocando letras en negritas
-$pdf->Cell(30, 10, 'Consecutivo', 1, 0, 'C', 0);
-$pdf->Cell(35, 10, 'Service Tag', 1, 0, 'C', 0);
-$pdf->Cell(105, 10, 'Usuario', 1, 0, 'C', 0);
-$pdf->Cell(110, 10, 'Falla', 1, 1, 'C', 0);
-$pdf->SetFont('Helvetica', '', 9);//Devolviendo valores de letra
+$pdf->SetFont('Helvetica', 'B', 8);//Colocando letras en negritas
+//$pdf->Cell(18, 10, 'Consecutivo', 1, 0, 'C', 0);
+//$pdf->Cell(28, 10, 'Service Tag', 1, 0, 'C', 0);
+$pdf->Cell(28, 10, 'Service Tag', 1, 0, 'C', 0);
+$pdf->Cell(50, 10, 'Usuario', 1, 0, 'C', 0);
+$pdf->Cell(70, 10, 'Diferencia 1', 1, 0, 'C', 0);
+$pdf->Cell(70, 10, 'Diferencia 2', 1, 0, 'C', 0);
+$pdf->Cell(65, 10, 'Falla', 1, 1, 'C', 0);
+$pdf->SetFont('Helvetica', '', 8);//Devolviendo valores de letra
 
 //Ciclo para recorrer la tabla e insertar registros en la tabla
 $a=0;
+
 while ($row = $resultado->fetch_assoc()) {
+	$pdf->SetFont('Helvetica', '', 6);//Devolviendo valores de letra
 	//Ancho alto,borde,salto de linea justificacion relleno
-	$pdf->Cell(30,10, utf8_decode($row['consecutivo']), 1, 0, 'C', 0);
-	$pdf->Cell(35,10, utf8_decode($row['servicetag']), 1, 0, 'C', 0);
-	$pdf->Cell(105,10, utf8_decode($row['usuario']), 1, 0, 'C', 0);
-	$pdf->Cell(110,10, utf8_decode($row['falla']), 1, 1, 'C', 0);
+	//$pdf->Cell(15,10, utf8_decode($row['consecutivo']), 1, 0, 'C', 0);
+	$pdf->Cell(28,10, utf8_decode($row['servicetag']), 1, 0, 'C', 0);
+	//$pdf->multiCell(28,10,utf8_decode($row['servicetag']),1,'B',false);
+
+	
+	//$pdf->MultiCell(28,10,utf8_decode($row['servicetag']),0,'C',false,0);
+	$pdf->Cell(50,10, utf8_decode($row['usuario']), 1, 0, 'C', 0);
+	//$pdf->multiCell(50,10,utf8_decode($row['usuario']), 1, 0);
+
+	$pdf->Cell(70,10, utf8_decode($row['dif1']), 1, 0, 'C', 0);
+	//$pdf->multiCell(65,10,utf8_decode($row['dif1']), 1, 0);
+	$pdf->Cell(70,10, utf8_decode($row['dif2']), 1, 0, 'C', 0);
+	//$pdf->multiCell(65,10,utf8_decode($row['dif2']), 1, 0);
+	//$pdf->multiCell(65,10,utf8_decode($row['falla']), 1, 1);
+	$pdf->Cell(65,10, utf8_decode($row['falla']), 1, 1, 'C', 0);
+	//MultiCell(float w, float h, string txt [, mixed border [, string align [, boolean fill]]])
 	$a=$a+1;
-	
-	
 }
+
 $pdf->Cell(43,10, utf8_decode(""), 0, 1, 'C', 0);
 $pdf->Cell(25, 10, 'EXISTEN '.$a.' DIFERENCIAS', 0, 0, 0);
 //Indicar salida del archivo pdf

@@ -72,14 +72,15 @@ $conexion = mysqli_connect('localhost', 'root', '', 'cmbd');
                 <th>Consecutivo</th>
                 <th>Service Tag</th>
                 <th>Usuario</th>
+                <th>Diferencia 1</th>
+                <th>Diferencia 2</th>
                 <th>Falla</th>
-                <th>Fecha y Hora</th>
             </tr>
         </thead>
         <?php
         error_reporting(0);
         $fechahora = $_POST['fechahora'];
-        $sql = "SELECT * FROM hisdifinv WHERE fechahora = '$fechahora'";
+        $sql = "SELECT * FROM diferencias";
         $result = mysqli_query($conexion, $sql);
 
         while ($mostrar = mysqli_fetch_array($result)) {
@@ -88,8 +89,9 @@ $conexion = mysqli_connect('localhost', 'root', '', 'cmbd');
                 <td><?php echo $mostrar['consecutivo'] ?></td>
                 <td><?php echo $mostrar['servicetag'] ?></td>
                 <td><?php echo $mostrar['usuario'] ?></td>
+                <td><?php echo $mostrar['dif1'] ?></td>
+                <td><?php echo $mostrar['dif2'] ?></td>
                 <td><?php echo $mostrar['falla'] ?></td>
-                <td><?php echo $mostrar['fechahora'] ?></td>
             </tr>
         <?php
         }
