@@ -56,11 +56,11 @@ $pdf->AddPage();
 $pdf->SetFont('Helvetica', '', 12);
 
 //Encabezados de la tabla
-$pdf->SetFont('Helvetica', 'B', 12);//Colocando letras en negritas
-$pdf->Cell(30, 10, 'Consecutivo', 1, 0, 'C', 0);
+$pdf->SetFont('Helvetica', 'B', 10);//Colocando letras en negritas
+$pdf->Cell(25, 10, 'Consecutivo', 1, 0, 'C', 0);
 //$pdf->Cell(28, 10, 'Service Tag', 1, 0, 'C', 0);
-$pdf->Cell(30, 10, 'Service Tag', 1, 0, 'C', 0);
-$pdf->Cell(60, 10, 'Usuario', 1, 0, 'C', 0);
+$pdf->Cell(25, 10, 'Service Tag', 1, 0, 'C', 0);
+$pdf->Cell(75, 10, 'Usuario', 1, 0, 'C', 0);
 $pdf->Cell(90, 10, 'Puesto', 1, 0, 'C', 0);
 //$pdf->Cell(70, 10, 'Diferencia 2', 1, 0, 'C', 0);
 $pdf->Cell(60, 10, 'Falla', 1, 1, 'C', 0);
@@ -70,15 +70,15 @@ $pdf->SetFont('Helvetica', '', 12);//Devolviendo valores de letra
 $a=0;
 
 while ($row = $resultado->fetch_assoc()) {
-	$pdf->SetFont('Helvetica', '', 6);//Devolviendo valores de letra
+	$pdf->SetFont('Helvetica', '', 7);//Devolviendo valores de letra
 	//Ancho alto,borde,salto de linea justificacion relleno
-	$pdf->Cell(30,10, utf8_decode($row['consecutivo']), 1, 0, 'C', 0);
-	$pdf->Cell(30,10, utf8_decode($row['servicetag']), 1, 0, 'C', 0);
+	$pdf->Cell(25,10, utf8_decode($row['consecutivo']), 1, 0, 'C', 0);
+	$pdf->Cell(25,10, utf8_decode($row['servicetag']), 1, 0, 'C', 0);
 	//$pdf->multiCell(28,10,utf8_decode($row['servicetag']),1,'B',false);
 
 	
 	//$pdf->MultiCell(28,10,utf8_decode($row['servicetag']),0,'C',false,0);
-	$pdf->Cell(60,10, utf8_decode($row['usuario']), 1, 0, 'C', 0);
+	$pdf->Cell(75,10, utf8_decode($row['usuario']), 1, 0, 'C', 0);
 	$pdf->Cell(90,10, utf8_decode($row['puesto']), 1, 0, 'C', 0);
 	//$pdf->multiCell(50,10,utf8_decode($row['usuario']), 1, 0);
 

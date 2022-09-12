@@ -1,8 +1,11 @@
-<?php ob_start();
+<?php ob_start(); //Creando el objeto de inicio de documento
+//Efectuando conexión a la BD
 $conexion = mysqli_connect('localhost', 'root', '', 'cmbd'); ?>
 <div>
-    <img src="img/reportes/armas_horizontal.png" width="210" height="130" align="left">
-    <img src="img/reportes/edomex_horizontal.png" width="190" height="120" align="right">
+    <!--Definiendo encabezados de la hoja-->
+    <img src="img/reportes/armas_horizontal.png" width="240" height="130" align="left">
+    <br>
+    <img src="img/reportes/edomex_horizontal.png" width="220" height="105" align="right">
     <h1>Reporte de diferencias ALTUM</h1>
 </div>
 <br>
@@ -14,6 +17,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'cmbd'); ?>
 <br>
 <br>
 <br>
+<!--Definiendo la estructura de la tabla-->
 <table>
     <thead>
         <tr>
@@ -26,14 +30,15 @@ $conexion = mysqli_connect('localhost', 'root', '', 'cmbd'); ?>
         </tr>
     </thead>
     <?php
+    //Efectuando la consulta a la BD
     error_reporting(0);
-    $fechahora = $_POST['fechahora'];
     $sql = "SELECT * FROM diferencias";
     $result = mysqli_query($conexion, $sql);
 
     while ($mostrar = mysqli_fetch_array($result)) {
     ?>
         <tr>
+            <!--Imprimiendo valores de la vista-->
             <td><?php echo $mostrar['consecutivo'] ?></td>
             <td><?php echo $mostrar['servicetag'] ?></td>
             <td><?php echo $mostrar['usuario'] ?></td>
@@ -49,11 +54,9 @@ $conexion = mysqli_connect('localhost', 'root', '', 'cmbd'); ?>
     Secretaria de Cultura y Turismo
 </footer>
 
-
+<!--Definiendo los estilos que tendra la tabla-->
 <style>
-    @page {
-      
-    }
+    @page {}
 
     header {
         position: fixed;
@@ -129,18 +132,19 @@ $conexion = mysqli_connect('localhost', 'root', '', 'cmbd'); ?>
 </style>
 
 <?php
+//Invicando a la libreria DOMPDF
 require_once 'dompdf/autoload.inc.php';
 
 use Dompdf\Dompdf;
 
+//Creando un objeto dentro de DOMPDF
 $dompdf = new DOMPDF();
-
-# Definimos el tamaño y orientación del papel que queremos.
-# O por defecto cogerá el que está en el fichero de configuración.
+//Estableciendo las orientacion de la hoja
 $dompdf->set_paper("A4", "landscape");
-
+//Cragando el HTML
 $dompdf->load_html(ob_get_clean());
 $dompdf->render();
+//Indicando el guardado del PDF
 $pdf = $dompdf->output();
 $filename = "ReporteDiferencias.pdf";
 file_put_contents($filename, $pdf);
