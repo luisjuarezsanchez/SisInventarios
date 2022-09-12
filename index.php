@@ -82,12 +82,12 @@
 <div class="card">
     <div class="card text-bg-light mb-3">
         <div class="card-body">
-            <a href="reporteex.php"><img src="img/iconos/historico.png" width="260" height="190"></a>
-            <h5 class="card-title">Histórico de diferencias encontradas</h5>
-            <p class="card-text">Visualizar el historial de diferencias
-                <br>efectuados en distintos puntos en el tiempo
+            <a href="pdf.php"><img src="img/iconos/historico.png" width="210" height="190"></a>
+            <h5 class="card-title">Imprimir reporte de diferencias a detalle</h5>
+            <p class="card-text">Visualizar las diferencias especificando
+                <br> el campo que contiene valores distintos
             </p>
-            <a href="reporteex.php" class="btn btn-primary">Ir</a>
+            <a href="pdf.php" class="btn btn-primary">Ir</a>
         </div>
     </div>
 </div>
